@@ -1,4 +1,10 @@
 .form {
     margin: 10px; 
     max-width: 500px;
+    height: 1000px;
+}
+
+.btnsSort {
+    float: right;
+    height: 20px;
 }

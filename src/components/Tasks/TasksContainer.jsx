@@ -8,13 +8,17 @@ class TasksContainer extends React.Component {
         this.props.getTasks();
     }
 
-    handleChange = (e, id) => {
-        this.props.changeCheckboxDone(id, e.target.checked);
+    onPageChanged = (pageNumber) => {
+        this.props.getTasks(pageNumber);
     }
 
     render() {
         return (
-            <Tasks tasks={this.props.tasks} handleChange={this.handleChange} totalTaskCount={this.props.totalTaskCount}/>
+            <Tasks tasks={this.props.tasks} 
+                   totalTaskCount={this.props.totalTaskCount}
+                   currentPage={this.props.currentPage}
+                   onPageChanged={this.onPageChanged}
+                   sortTasks={this.props.getTasks}/>
         )
     }
 }
@@ -22,7 +26,8 @@ class TasksContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         tasks: state.tasks.tasks,
-        totalTaskCount: state.tasks.totalTaskCount
+        totalTaskCount: state.tasks.totalTaskCount,
+        currentPage: state.tasks.currentPage
     }
 }
 
@@ -31,8 +36,8 @@ const mapDispatchToProps = (dispatch) => {
         changeCheckboxDone: (idTask, checked) => {
             dispatch(setStatusTask(idTask, checked))
         },
-        getTasks: () => {
-            dispatch(getTasks());
+        getTasks: (pageNumber, sortField, sortDirection) => {
+            dispatch(getTasks(pageNumber, sortField, sortDirection));
         }
     }
 }

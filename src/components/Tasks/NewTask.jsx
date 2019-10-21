@@ -1,8 +1,8 @@
 import React from "react";
 import {addTaskThunk} from "../../redux/tasks-reducer";
 import {connect} from "react-redux";
-import { Field, reduxForm } from 'redux-form';
-import {required, renderField} from "../FormValidators"
+import { Field, reduxForm, reset } from 'redux-form';
+import {required, renderField, email} from "../FormValidators"
 import css from "./Task.module.css";
 
 const NewTaskForm = (props) => {
@@ -26,7 +26,7 @@ const NewTaskForm = (props) => {
                        type="email"
                        className="form-control"
                        placeholder="Print your email"
-                       validate={[required]}
+                       validate={[required, email]}
                 />
             </div>
             <div className="form-group">
@@ -55,8 +55,9 @@ const NewTask = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTask: (userName, email, text) => {
-            dispatch(addTaskThunk(userName, email, text))
+        addTask: (username, email, text) => {
+            dispatch(addTaskThunk(username, email, text));
+            dispatch(reset("task"))
         }
     }
 }
