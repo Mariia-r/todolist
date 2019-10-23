@@ -1,17 +1,19 @@
 import React from "react";
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import {required, renderField} from "../FormValidators"
 import css from "./Login.module.css"
+import {login} from "../../redux/auth-reducer" 
+import {connect} from "react-redux";
 
 const LoginForm = (props) => {
     const {handleSubmit} = props;
-    
+
     return (
         <div className="d-flex justify-content-center">
-            <form onSubmit={handleSubmit} className={css.loginForm}>
+            <form className={css.loginForm} onSubmit={handleSubmit} >
                 <div className="form-group">
-                    <label htmlFor="user">User</label>
-                    <Field name="name" 
+                    <label htmlFor="username">User</label>
+                    <Field name="username" 
                         component={renderField}
                         type="text"
                         className="form-control"
@@ -20,7 +22,7 @@ const LoginForm = (props) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="password">Email</label>
+                    <label htmlFor="password">Password</label>
                     <Field name="password" 
                         component={renderField}
                         type="password"
@@ -30,8 +32,9 @@ const LoginForm = (props) => {
                     />
                 </div>
                 <button type="submit" className="btn btn-success">Login</button>
+                
                 <div className={css.info}>
-                    <p>Login: Admin</p>
+                    <p>Login: admin</p>
                     <p>Password: 123</p>
                 </div>
             </form>
@@ -43,9 +46,16 @@ const LoginReactForm = reduxForm({form: 'login'})(LoginForm);
 
 const Login = (props) => {
     let login = (values) => {
-        console.log(values);
+        props.login(values.username, values.password);
       }
       return <LoginReactForm onSubmit={login}/>
 }
-
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (username, password) => {
+            dispatch(login(username, password));
+            dispatch(reset("login"));
+        }
+    }
+}
+export default connect(null, mapDispatchToProps)(Login);

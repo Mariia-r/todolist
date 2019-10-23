@@ -1,18 +1,11 @@
 import React from "react";
 import Paginator from "../Paginator/Paginator";
-import css from "./Task.module.css"
+import css from "./Task.module.css";
+import Task from "./Task";
 
 const Tasks = (props) => {
-   const tasks = props.tasks.map((task, id) => {
-        return (
-            <tr key={id}>
-                <td>{task.id}</td>
-                <td>{task.username}</td>
-                <td>{task.email}</td>
-                <td>{task.text}</td>
-                <td>{task.status}</td>
-            </tr>
-        )
+   const tasks = props.tasks.map((task) => {
+        return (<Task key={task.id} task={task} editTask={props.editTask} admin={props.admin}/>)
     });
 
     const btnsSortTasks = (sortField) => {   
@@ -41,7 +34,8 @@ const Tasks = (props) => {
                         <th style={{"width": "35%"}}>
                             Comments
                         </th>
-                        <th style={{"width": "15%"}}>Done
+                        <th style={{"width": "15%"}}>
+                            Done
                             {btnsSortTasks("status")}
                         </th>
                     </tr>
@@ -50,7 +44,9 @@ const Tasks = (props) => {
                     {tasks}
                 </tbody>
             </table>
-            <Paginator totalTaskCount={props.totalTaskCount} onPageChanged={props.onPageChanged} currentPage={props.currentPage}/>
+            <Paginator totalTaskCount={props.totalTaskCount}
+                       onPageChanged={props.onPageChanged} 
+                       currentPage={props.currentPage}/>
         </div>
     )
 }

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import css from "./Paginator.module.css"
+import css from "./Paginator.module.css";
 
 const Paginator = ({pageSize = 3, ...props}) => {
-    let portionSize = 3;
+    let portionSize = 5;
     let pagesCount = Math.ceil(props.totalTaskCount/pageSize);
     let pagesPortion = Math.ceil(pagesCount/portionSize);
     let [portionNumber, setPortionNumber] = useState(1);
