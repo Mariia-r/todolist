@@ -1,7 +1,7 @@
 import React from "react";
 import {addTaskThunk} from "../../redux/tasks-reducer";
 import {connect} from "react-redux";
-import { Field, reduxForm, reset } from 'redux-form';
+import {Field, reduxForm, reset} from 'redux-form';
 import {required, renderField, email} from "../FormValidators"
 import css from "./Task.module.css";
 
@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addTask: (username, email, text) => {
             dispatch(addTaskThunk(username, email, text));
-            dispatch(reset("task"))
+            dispatch(reset("task"));
         }
     }
 }

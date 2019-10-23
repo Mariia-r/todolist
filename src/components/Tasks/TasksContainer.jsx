@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {setStatusTask, getTasks} from "../../redux/tasks-reducer";
+import {getTasks, editTask} from "../../redux/tasks-reducer";
 import Tasks from "./Tasks";
 
 class TasksContainer extends React.Component {
@@ -9,7 +9,7 @@ class TasksContainer extends React.Component {
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getTasks(pageNumber);
+        this.props.getTasks(pageNumber, this.props.sortField, this.props.sortDirection);
     }
 
     render() {
@@ -18,7 +18,10 @@ class TasksContainer extends React.Component {
                    totalTaskCount={this.props.totalTaskCount}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
-                   sortTasks={this.props.getTasks}/>
+                   sortTasks={this.props.getTasks}
+                   editTask={this.props.editTask}
+                   admin={this.props.admin}
+                   />
         )
     }
 }
@@ -27,17 +30,20 @@ const mapStateToProps = (state) => {
     return {
         tasks: state.tasks.tasks,
         totalTaskCount: state.tasks.totalTaskCount,
-        currentPage: state.tasks.currentPage
+        currentPage: state.tasks.currentPage,
+        sortField: state.tasks.sortField,
+        sortDirection: state.tasks.sortDirection,
+        admin: localStorage.token
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeCheckboxDone: (idTask, checked) => {
-            dispatch(setStatusTask(idTask, checked))
-        },
         getTasks: (pageNumber, sortField, sortDirection) => {
             dispatch(getTasks(pageNumber, sortField, sortDirection));
+        },
+        editTask: (id, text, status) => {
+            dispatch(editTask(id, text, status))
         }
     }
 }
