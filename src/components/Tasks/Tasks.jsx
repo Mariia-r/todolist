@@ -11,8 +11,8 @@ const Tasks = (props) => {
     const btnsSortTasks = (sortField) => {   
         return (
             <div className={css.btnsSort}>
-                <button onClick={(e) => {props.sortTasks(props.currentPage, sortField, "asc")}}>&#8595;</button>
-                <button onClick={(e) => {props.sortTasks(props.currentPage, sortField, "desc")}}>&#8593;</button>
+                <button onClick={(e) => {props.getTasks(props.currentPage, sortField, "asc")}}>&#8595;</button>
+                <button onClick={(e) => {props.getTasks(props.currentPage, sortField, "desc")}}>&#8593;</button>
             </div>
         )
     }

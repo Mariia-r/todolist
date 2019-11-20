@@ -18,7 +18,7 @@ class TasksContainer extends React.Component {
                    totalTaskCount={this.props.totalTaskCount}
                    currentPage={this.props.currentPage}
                    onPageChanged={this.onPageChanged}
-                   sortTasks={this.props.getTasks}
+                   getTasks={this.props.getTasks}
                    editTask={this.props.editTask}
                    admin={this.props.admin}
                    />

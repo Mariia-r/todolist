@@ -1,12 +1,27 @@
 import * as axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://uxcandy.com/~shapoval/test-task-backend/v2"
+    baseURL: "https://uxcandy.com/~shapoval/test-task-backend/v2/",
+    headers: {'Content-Type': 'multipart/form-data'}
+});
+
+instance.interceptors.request.use(config => {
+    config.params = {
+      ...config.params,
+     developer: 'Mariia',
+    };
+    return config;
 });
 
 export const tasksAPI = {
     getTasks(pageNumber, sortField, sortDirection) {
-        return instance.get(`/?developer=Mariia&page=${pageNumber}&sort_field=${sortField}&sort_direction=${sortDirection}`)
+        return instance.get(``, {
+            params: {
+                page: pageNumber,
+                sort_field: sortField,
+                sort_direction: sortDirection
+            }
+        })
         .then(response => {
             return response.data;
         })
@@ -16,14 +31,13 @@ export const tasksAPI = {
     },
 
     createTask(username, email, text) {
-        var bodyFormData = new FormData();
+        const bodyFormData = new FormData();
         bodyFormData.set('username', username);
         bodyFormData.set('email', email);
         bodyFormData.set('text', text);
         return instance.post(
-            `/create?developer=Mariia`, 
-            bodyFormData, 
-            {headers: {'Content-Type': 'multipart/form-data'}}
+            `create`, 
+            bodyFormData
         )
         .then(response => {
             return response.data;
@@ -40,9 +54,8 @@ export const tasksAPI = {
         bodyFormData.set('token', localStorage.token);
 
         return instance.post(
-            `/edit/${id}?developer=Mariia`,
-            bodyFormData,
-            {headers: {'Content-Type': 'multipart/form-data'}}
+            `edit/${id}`,
+            bodyFormData
         )
         .then(response => {
             return response.data;
@@ -59,9 +72,8 @@ export const loginAPI = {
         bodyFormData.set('username', username);
         bodyFormData.set('password', password);
         return instance.post(
-            '/login?developer=Mariia',
-            bodyFormData,
-            {headers: {'Content-Type': 'multipart/form-data'}}
+            'login',
+            bodyFormData
         )
         .then(response => {
             return response.data;
